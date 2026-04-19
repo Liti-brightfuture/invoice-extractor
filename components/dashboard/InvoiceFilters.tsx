@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useDebounce } from '@/hooks/useDebounce'
 import {
@@ -47,6 +47,7 @@ export default function InvoiceFilters({
   const [to, setTo] = useState(currentTo || '')
   const [q, setQ] = useState(currentQ || '')
   const debouncedQ = useDebounce(q, 300)
+  const isMounted = useRef(false)
 
   const pushParams = useCallback(
     (overrides: Record<string, string>) => {
@@ -77,8 +78,12 @@ export default function InvoiceFilters({
     [router, searchParams, status, supplier, from, to, debouncedQ]
   )
 
-  // Push URL when debounced search value settles
+  // Push URL when debounced search value settles (skip on first mount)
   useEffect(() => {
+    if (!isMounted.current) {
+      isMounted.current = true
+      return
+    }
     pushParams({ q: debouncedQ })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedQ])
