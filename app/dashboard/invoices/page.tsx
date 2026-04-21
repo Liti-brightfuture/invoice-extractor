@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import { signOut } from '@/app/dashboard/actions'
 import InvoiceFilters from '@/components/dashboard/InvoiceFilters'
 import InvoiceTable from '@/components/dashboard/InvoiceListTable'
+import { ZipImportButton } from '@/components/dashboard/ZipImportButton'
 import type { InvoiceRow, Supplier } from '@/types/invoice'
 
 const PAGE_SIZE = 20
@@ -40,9 +41,10 @@ export default async function InvoicesPage({ searchParams }: PageProps) {
   let query = supabase
     .from('invoices')
     .select(
-      'id, status, vendor_name, vendor_cui, invoice_number, invoice_date, total, currency, created_at',
+      'id, status, vendor_name, vendor_cui, invoice_number, invoice_date, total, currency, created_at, source, linked_invoice_id',
       { count: 'exact' }
     )
+    .is('archived_at', null)
     .order('created_at', { ascending: false })
     .range(fromIdx, toIdx)
 
@@ -58,6 +60,7 @@ export default async function InvoicesPage({ searchParams }: PageProps) {
   const { data: supplierRows } = await supabase
     .from('invoices')
     .select('vendor_cui, vendor_name')
+    .is('archived_at', null)
     .not('vendor_cui', 'is', null)
     .order('vendor_name')
 
@@ -98,7 +101,10 @@ export default async function InvoicesPage({ searchParams }: PageProps) {
       </nav>
 
       <div className="max-w-7xl mx-auto px-6 py-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">Facturi</h1>
+        <div className="mb-6 flex items-center justify-between gap-4">
+          <h1 className="text-2xl font-bold text-gray-900">Facturi</h1>
+          <ZipImportButton userId={user.id} />
+        </div>
 
         <InvoiceFilters
           suppliers={suppliers}

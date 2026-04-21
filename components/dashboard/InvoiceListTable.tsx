@@ -235,9 +235,21 @@ export default function InvoiceTable({ invoices, count, page, pageSize }: Props)
                       : <span className="text-muted-foreground">—</span>}
                   </td>
                   <td className="px-3 py-2.5">
-                    <span className={cn('inline-flex px-2 py-0.5 rounded-full text-xs font-medium', statusCfg.className)}>
-                      {statusCfg.label}
-                    </span>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className={cn('inline-flex px-2 py-0.5 rounded-full text-xs font-medium', statusCfg.className)}>
+                        {statusCfg.label}
+                      </span>
+                      {inv.source === 'xml' && (
+                        <span className="inline-flex px-[9px] py-[3px] rounded-full text-[11.5px] font-medium bg-emerald-100 text-emerald-700">
+                          XML e-Factura
+                        </span>
+                      )}
+                      {inv.linked_invoice_id && (
+                        <span className="inline-flex px-[9px] py-[3px] rounded-full text-[11.5px] font-medium bg-sky-100 text-sky-700">
+                          Legată cu XML
+                        </span>
+                      )}
+                    </div>
                   </td>
                 </tr>
               )

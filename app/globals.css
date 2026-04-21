@@ -4,7 +4,27 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  /* InvoiceExtractor color tokens → Tailwind utilities */
+  --color-ie-bg: #F5F2ED;
+  --color-ie-surface: #FFFFFF;
+  --color-ie-border: #E2DDD6;
+  --color-ie-text: #1A1714;
+  --color-ie-muted: #8C8680;
+  --color-ie-accent: #D4622A;
+  --color-ie-accent-hover: #B8501F;
+  --color-ie-accent-light: #FAF0EB;
+  --color-ie-green: #2A7A4B;
+  --color-ie-green-light: #E8F5EF;
+  --color-ie-yellow: #A06800;
+  --color-ie-yellow-light: #FFF8E6;
+}
+
 @theme inline {
+  /* Fonts */
+  --font-dm-sans: var(--font-dm-sans);
+  --font-dm-mono: var(--font-dm-mono);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
