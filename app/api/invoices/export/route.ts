@@ -11,18 +11,28 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
+  const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+  const ALLOWED_FORMATS: ExportFormat[] = ['csv', 'smartbill', 'saga']
+
   const { searchParams } = request.nextUrl
-  const ids = searchParams.get('ids')?.split(',').filter(Boolean) ?? []
-  const format = (searchParams.get('format') ?? 'csv') as ExportFormat
+  const ids = (searchParams.get('ids') ?? '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter((s) => UUID_RE.test(s))
+    .slice(0, 100)
+
+  const rawFormat = searchParams.get('format') ?? 'csv'
+  const format = (ALLOWED_FORMATS.includes(rawFormat as ExportFormat) ? rawFormat : 'csv') as ExportFormat
 
   if (!ids.length) {
-    return NextResponse.json({ error: 'No IDs provided' }, { status: 400 })
+    return NextResponse.json({ error: 'No valid IDs provided' }, { status: 400 })
   }
 
   const { data, error } = await supabase
     .from('invoices')
     .select('id, vendor_name, vendor_cui, invoice_number, invoice_date, total, currency, status, subtotal, vat_amount')
     .in('id', ids)
+    .eq('user_id', user.id)
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 })

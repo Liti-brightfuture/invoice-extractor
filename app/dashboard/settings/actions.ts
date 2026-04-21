@@ -17,6 +17,17 @@ export async function updateProfile(data: {
   company_cui: string
   company_address: string
 }): Promise<ActionResult> {
+  if (data.full_name && data.full_name.length > 150)
+    return { success: false, error: 'Numele este prea lung (max 150 caractere)' }
+  if (data.company_name && data.company_name.length > 255)
+    return { success: false, error: 'Numele firmei este prea lung (max 255 caractere)' }
+  if (data.company_address && data.company_address.length > 500)
+    return { success: false, error: 'Adresa este prea lungă (max 500 caractere)' }
+  if (data.phone && !/^[0-9+\-\s()]{0,20}$/.test(data.phone))
+    return { success: false, error: 'Număr de telefon invalid' }
+  if (data.company_cui && !/^(RO)?[0-9]{2,10}$/i.test(data.company_cui.trim()))
+    return { success: false, error: 'CUI invalid (ex: RO12345678 sau 12345678)' }
+
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { success: false, error: 'Neautentificat' }
@@ -155,12 +166,19 @@ export async function saveSagaSettings(data: {
 
 // ─── Preferințe procesare ────────────────────────────────────
 
+const ALLOWED_LANGS = ['ro', 'en']
+
 export async function savePreferences(prefs: {
   threshold: number
   validate_cui: boolean
   offline_mode: boolean
   lang: string
 }): Promise<ActionResult> {
+  if (typeof prefs.threshold !== 'number' || prefs.threshold < 0 || prefs.threshold > 100)
+    return { success: false, error: 'Pragul de încredere trebuie să fie între 0 și 100' }
+  if (!ALLOWED_LANGS.includes(prefs.lang))
+    return { success: false, error: 'Limbă invalidă' }
+
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { success: false, error: 'Neautentificat' }

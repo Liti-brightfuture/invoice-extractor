@@ -169,11 +169,14 @@ function splitInvoiceNumber(raw: string): { series: string; number: string } {
   return { series: '', number: raw }
 }
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+
 function parseIds(req: NextRequest): string[] {
   return (req.nextUrl.searchParams.get('invoice_ids') ?? '')
     .split(',')
     .map((s) => s.trim())
-    .filter(Boolean)
+    .filter((s) => UUID_RE.test(s))
+    .slice(0, 100)
 }
 
 function today() {
