@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confirmă-ți contul InvoiceExtractor</title>
+</head>
+<body style="margin:0;padding:0;background-color:#F5F2ED;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;">
+
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F5F2ED;padding:40px 16px;">
+    <tr>
+      <td align="center">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:580px;">
+
+          <!-- HEADER -->
+          <tr>
+            <td style="background-color:#1A1714;border-radius:12px 12px 0 0;padding:28px 40px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td>
+                    <span style="font-size:20px;font-weight:700;letter-spacing:-0.5px;color:#FFFFFF;">
+                      Invoice<span style="color:#D4622A;">Extractor</span>
+                    </span>
+                  </td>
+                  <td align="right">
+                    <span style="display:inline-block;background-color:#D4622A;color:#FFFFFF;font-size:11px;font-weight:600;letter-spacing:0.5px;padding:4px 10px;border-radius:20px;text-transform:uppercase;">
+                      Cont nou
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- BODY CARD -->
+          <tr>
+            <td style="background-color:#FFFFFF;padding:44px 40px 36px 40px;">
+
+              <!-- Icon -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="padding-bottom:24px;">
+                    <div style="display:inline-block;width:52px;height:52px;background-color:#FAF0EB;border-radius:12px;text-align:center;line-height:52px;font-size:24px;">
+                      ✉️
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Heading -->
+                <tr>
+                  <td style="padding-bottom:12px;">
+                    <p style="margin:0;font-size:22px;font-weight:700;color:#1A1714;letter-spacing:-0.4px;line-height:1.3;">
+                      Confirmă-ți adresa de email
+                    </p>
+                  </td>
+                </tr>
+
+                <!-- Subtext -->
+                <tr>
+                  <td style="padding-bottom:8px;">
+                    <p style="margin:0;font-size:15px;color:#8C8680;line-height:1.6;">
+                      Bun venit! Contul tău InvoiceExtractor a fost creat pentru:
+                    </p>
+                  </td>
+                </tr>
+
+                <!-- Email address highlight -->
+                <tr>
+                  <td style="padding-bottom:28px;">
+                    <p style="margin:0;font-size:15px;font-weight:600;color:#1A1714;background-color:#F5F2ED;border-radius:8px;padding:10px 14px;border-left:3px solid #D4622A;">
+                      {{ .Email }}
+                    </p>
+                  </td>
+                </tr>
+
+                <!-- Description -->
+                <tr>
+                  <td style="padding-bottom:32px;">
+                    <p style="margin:0;font-size:15px;color:#8C8680;line-height:1.7;">
+                      Apasă butonul de mai jos pentru a-ți confirma adresa și a activa contul.
+                      Vei putea începe să extragi și să gestionezi facturi automat.
+                    </p>
+                  </td>
+                </tr>
+
+                <!-- CTA Button -->
+                <tr>
+                  <td style="padding-bottom:32px;" align="center">
+                    <a href="{{ .ConfirmationURL }}"
+                       style="display:inline-block;background-color:#D4622A;color:#FFFFFF;text-decoration:none;font-size:15px;font-weight:600;padding:14px 36px;border-radius:8px;letter-spacing:0.1px;">
+                      Confirmă contul &rarr;
+                    </a>
+                  </td>
+                </tr>
+
+                <!-- Divider -->
+                <tr>
+                  <td style="padding-bottom:24px;">
+                    <div style="height:1px;background-color:#E2DDD6;"></div>
+                  </td>
+                </tr>
+
+                <!-- Warning / expiry -->
+                <tr>
+                  <td>
+                    <p style="margin:0;font-size:13px;color:#8C8680;line-height:1.6;">
+                      🔒 &nbsp;Link-ul este valid <strong>24 de ore</strong> și poate fi folosit o singură dată.<br />
+                      Dacă nu ai creat tu acest cont, poți ignora acest email în siguranță.
+                    </p>
+                  </td>
+                </tr>
+
+              </table>
+            </td>
+          </tr>
+
+          <!-- FOOTER -->
+          <tr>
+            <td style="background-color:#F5F2ED;border-top:1px solid #E2DDD6;border-radius:0 0 12px 12px;padding:20px 40px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td>
+                    <p style="margin:0;font-size:12px;color:#8C8680;line-height:1.6;">
+                      &copy; 2026 InvoiceExtractor &mdash; Extragere automată de facturi cu AI
+                    </p>
+                  </td>
+                  <td align="right">
+                    <p style="margin:0;font-size:12px;color:#8C8680;">
+                      Powered by <a href="https://supabase.com" style="color:#8C8680;text-decoration:none;">Supabase</a>
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
