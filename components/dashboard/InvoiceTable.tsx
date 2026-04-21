@@ -15,6 +15,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { ChevronDown, Download } from 'lucide-react'
+import { formatDate, formatAmount } from '@/lib/formatters'
 
 export interface InvoiceRow {
   id: string
@@ -316,14 +317,3 @@ function StatusChip({ status }: { status: string }) {
   )
 }
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
-
-function formatDate(d: string | null): string {
-  if (!d) return '—'
-  return new Date(d).toLocaleDateString('ro-RO', { day: '2-digit', month: 'short', year: 'numeric' })
-}
-
-function formatAmount(n: number | null, currency: string | null): string {
-  if (n == null) return '—'
-  return `${n.toLocaleString('ro-RO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency ?? 'RON'}`
-}
